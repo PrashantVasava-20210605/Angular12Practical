@@ -1,0 +1,40 @@
+<div class="card">
+        <div class="card-body">
+            <form [formGroup]="postForm" (ngSubmit)="save()">
+
+                <div class="form-group">
+                <label class="col-md-4">Add Post</label>
+                </div>
+
+                <div class="form-group">
+                    <textarea formControlName="content" maxlength="500" class="col-12" rows="5">
+
+                    </textarea>
+                    <div *ngIf="(submitted || contentControl.dirty || contentControl.touched)  &&  contentControl.errors?.required" class="alert-danger">
+                        Post must not be blank.
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="preview" *ngIf="postImage && postImage !== null">
+                        <img [src]="postImage" [alt]="" >
+                    </div>
+                </div>
+                
+                <!-- File Input -->
+                <div class="form-group">
+                    <input type="file" formControlName = "uploadImage" (change)="uploadFile($event)">
+                </div>
+
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">
+                        Save
+                    </button>
+                    <button type="button" (click)="closeForm()" class="btn btn-danger">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+</div>
