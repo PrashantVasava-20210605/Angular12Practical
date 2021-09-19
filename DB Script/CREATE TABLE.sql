@@ -10,6 +10,8 @@ Comments
 - Id - Text - PostId - CommentDateTime 
 Likes 
 - Id - PostId - LikeDateTime 
+SELECT * FROM  Post
+
 
 
 */
@@ -19,7 +21,7 @@ CREATE TABLE Post
 	Id INT IDENTITY(1, 1) PRIMARY KEY,
 	Content VARCHAR(MAX),
 	PostedOn DATETIME,
-	ImageBase64 VARCHAR(MAX)
+	ImageFileName VARCHAR(100)
 )
 
 CREATE TABLE Comment

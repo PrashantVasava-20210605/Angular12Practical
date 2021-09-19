@@ -10,7 +10,7 @@ namespace AngularApplicationTest.Models
         public int Id { get; set; }
         public string Content { get; set; }
         public DateTime PostedOn { get; set; }
-        public string ImageBase64 { get; set; }
+        public string ImageFileName { get; set; }
     }
 
     public class PostView: Post

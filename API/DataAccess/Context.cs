@@ -35,7 +35,7 @@ namespace AngularApplicationTest.DataAccess
 
                 entity.Property(e => e.Id).HasColumnName("Id");
                 entity.Property(e => e.Content).HasColumnName("Content").IsRequired();
-                entity.Property(e => e.ImageBase64).HasColumnName("ImageBase64");
+                entity.Property(e => e.ImageFileName).HasColumnName("ImageFileName");
                 entity.Property(e => e.PostedOn).HasColumnName("PostedOn").HasColumnType("datetime");
             });
 

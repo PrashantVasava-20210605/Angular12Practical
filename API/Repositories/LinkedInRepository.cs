@@ -17,8 +17,7 @@ namespace AngularApplicationTest.Repositories
         {
             _context = context;
         }
-                
-
+        
         public async Task<List<PostView>> ListPost()
         {
             var query = _context.Posts
@@ -27,7 +26,7 @@ namespace AngularApplicationTest.Repositories
                 {
                     Id = post.Id,
                     Content = post.Content,
-                    ImageBase64 = post.ImageBase64,
+                    ImageFileName = post.ImageFileName,
                     PostedOn = post.PostedOn,
                     CommentCount = _context.Comments.Where(comment => comment.PostId == post.Id).Count(),
                     LikeCount = _context.PostLikes.Where(like => like.PostId == post.Id).Count()
@@ -53,7 +52,7 @@ namespace AngularApplicationTest.Repositories
         {
             var postDB = await _context.Posts.FirstOrDefaultAsync(x => x.Id == postId);
             postDB.Content = post.Content;
-            //postDB.ImageBase64 = post.ImageBase64;
+            postDB.ImageFileName = post.ImageFileName;
             _context.Entry<Post>(postDB).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
@@ -112,6 +111,12 @@ namespace AngularApplicationTest.Repositories
         public async Task<List<Comment>> ListComment(int postId)
         {
             return await _context.Comments.Where(x => x.PostId == postId).ToListAsync();
+        }
+
+        public async Task<Comment> GetCommentById(int postId, int commentId)
+        {
+            var comment = await _context.Comments.FirstOrDefaultAsync(x => x.PostId == postId && x.Id == commentId);
+            return comment;
         }
 
         public async Task<int> AddComent(int postId, Comment comment)
