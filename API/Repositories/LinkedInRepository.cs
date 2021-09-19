@@ -110,7 +110,7 @@ namespace AngularApplicationTest.Repositories
 
         public async Task<List<Comment>> ListComment(int postId)
         {
-            return await _context.Comments.Where(x => x.PostId == postId).ToListAsync();
+            return await _context.Comments.Where(x => x.PostId == postId).OrderByDescending(x => x.PostedOn).ToListAsync();
         }
 
         public async Task<Comment> GetCommentById(int postId, int commentId)
@@ -121,7 +121,7 @@ namespace AngularApplicationTest.Repositories
 
         public async Task<int> AddComent(int postId, Comment comment)
         {
-            comment.Id = postId;
+            comment.PostId = postId;
             comment.PostedOn = DateTime.Now;
             await _context.Comments.AddAsync(comment);
             await _context.SaveChangesAsync();
@@ -136,7 +136,7 @@ namespace AngularApplicationTest.Repositories
                 return;
             }
             commentDB.Content = comment.Content;
-            _context.Entry<Comment>(comment).State = EntityState.Modified;
+            _context.Entry<Comment>(commentDB).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
 

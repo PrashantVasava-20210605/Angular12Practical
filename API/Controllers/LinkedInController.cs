@@ -74,28 +74,28 @@ namespace AngularApplicationTest.Controllers
 
         [Route("posts/{postId}/comments/{commentId}")]
         [HttpGet]
-        public async Task<Comment> GetCommentId(int postId, int commentId)
+        public async Task<Comment> GetCommentId([FromRoute] int postId, [FromRoute] int commentId)
         {
             return await _linkedInService.GetCommentById(postId, commentId);
         }
 
         [Route("posts/{postId}/comments")]
         [HttpPost]
-        public async Task<int> AddComent(int postId, Comment comment)
+        public async Task<int> AddComent([FromRoute] int postId, [FromBody] Comment comment)
         {
             return await _linkedInService.AddComent(postId, comment);
         }
 
         [Route("posts/{postId}/comments/{commentId}")]
         [HttpPut]
-        public async Task UpdateComment(int postId, int commentId, Comment comment)
+        public async Task UpdateComment([FromRoute] int postId, [FromRoute] int commentId, [FromBody] Comment comment)
         {
             await _linkedInService.UpdateComment(postId, commentId, comment);
         }
 
         [Route("posts/{postId}/comments/{commentId}")]
         [HttpDelete]
-        public async Task DeleteComment(int postId, int commentId)
+        public async Task DeleteComment([FromRoute] int postId, [FromRoute] int commentId)
         {
             await _linkedInService.DeleteComment(postId, commentId);
         }
