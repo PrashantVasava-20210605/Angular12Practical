@@ -12,6 +12,10 @@ import { HomeComponent } from './modules/home/home/home.component';
 import { AddPostComponent } from './modules/home/home/add-post/add-post.component';
 import { ProfileComponent } from './modules/profile/profile/profile.component';
 import { EditPostComponent } from './modules/home/home/edit-post/edit-post.component';
+import { ModalPopupComponent } from './modules/shared/modal-popup/modal-popup.component';
+import { PopupServiceService } from './services/popup/popup-service.service';
+import { NgbModule, NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { PostComponent } from './modules/home/home/post/post.component';
 
 @NgModule({
   declarations: [
@@ -19,16 +23,20 @@ import { EditPostComponent } from './modules/home/home/edit-post/edit-post.compo
     HomeComponent,
     AddPostComponent,
     ProfileComponent,
-    EditPostComponent
+    EditPostComponent,
+    ModalPopupComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     SlimLoadingBarModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule,
+    NgbModalModule,
   ],
-  providers: [LinkedinService],
+  providers: [LinkedinService, PopupServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

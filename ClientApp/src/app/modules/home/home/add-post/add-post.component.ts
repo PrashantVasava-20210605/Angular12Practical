@@ -10,15 +10,15 @@ import { LinkedinService } from 'src/app/services/linkedin.service';
   styleUrls: ['./add-post.component.css']
 })
 export class AddPostComponent implements OnInit, OnDestroy {
+
+  @Output() onClose: EventEmitter<any> = new EventEmitter<any>();
   
   private savePostSubscription: Subscription;
-
-  @Output() onClose = new EventEmitter<any>();
-  @Output() onSave = new EventEmitter<any>();
 
   postForm: FormGroup;
   submitted: boolean;
   postImage: string;
+  attachment: File = null;
   
   public get contentControl(): AbstractControl {
     return this.postForm.get('content');
@@ -42,9 +42,6 @@ export class AddPostComponent implements OnInit, OnDestroy {
     }
   }
 
-  closeForm() {
-    this.onClose.emit(null);
-  }
 
   save() {
   
@@ -57,13 +54,14 @@ export class AddPostComponent implements OnInit, OnDestroy {
     
     const postModel = new Post();
     postModel.content = this.postForm.controls["content"].value;
-    postModel.imageBase64 = this.postImage;
+    //postModel.imageBase64 = this.postImage;
     
     //console.log("MODEL", postModel);
 
-    this.savePostSubscription = this.linkedinService.addPost(postModel).subscribe(
+    this.savePostSubscription = this.linkedinService.addPost(postModel, this.attachment).subscribe(
       (response) => {
-        this.onSave.emit(null);
+        this.linkedinService.notifyPostAddEdit(response);
+        this.onClose.emit(null);
         window.alert("Post created successfully.");
       },
       (error) => {
@@ -85,21 +83,31 @@ export class AddPostComponent implements OnInit, OnDestroy {
     console.log("INVALID CONROLS", invalid);
   }
 
-  uploadFile(event) {
+  setFile(event) {
 
     const fileControl = event.target as HTMLInputElement;
     if (!fileControl || !fileControl.files || fileControl.files.length<=0) {
       return;
     }
 
-    const file = fileControl.files[0];
+    this.attachment = fileControl.files[0];
     
     // File Preview
     const reader = new FileReader();
     reader.onload = () => {
       this.postImage = reader.result as string;
     }
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(this.attachment);
   }
 
+  openFileUpload() {
+    const element = document.getElementById('uploadImage') as HTMLInputElement;
+    element.value = '';
+    element.click();
+  }
+
+  removeFile() {
+    this.attachment = null;
+    this.postImage = null;
+  }
 }

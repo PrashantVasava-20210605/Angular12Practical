@@ -4,5 +4,5 @@ export class Post {
     postedOn: Date;
     likeCount: number;
     commentCount: number;
-    imageBase64: string;
+    imageFileName: string;
 };

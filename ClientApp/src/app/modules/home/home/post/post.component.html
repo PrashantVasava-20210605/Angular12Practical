@@ -1,0 +1,36 @@
+<div class="card mb-2 post-card">
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-10">
+                {{post.postedOn | date:'medium'}}
+            </div>
+            <div class="col-2" style="text-align: right;">
+                <a (click)="editPost(post.id)">Edit</a>&nbsp;
+                <a (click)="deletePost(post.id)">Delete</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                {{post.content}}
+            </div>
+        </div>
+
+        <div class="row" *ngIf="post.imageFileName && post.imageFileName !== ''">
+            <div class="preview col-12">
+                <img [src]="linkedinService.getImageLocation(post.imageFileName)" [alt]="" >
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <a (click)="likePost(post)">Likes</a>: {{post.likeCount}}
+            </div>
+            <div class="col-6" style="text-align: right;">
+                Comments: {{post.commentCount}}
+            </div>
+        </div>
+    </div>
+</div>
+

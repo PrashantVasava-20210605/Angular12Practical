@@ -1,52 +1,10 @@
 
-<div class="linkedin-list" *ngIf="currentStage=='list'">
+<div class="linkedin-list">
     
     <div class="mb-2  mt-2">
         <a (click)="addProduct()">New Post</a>
     </div>
     
-    <div class="card mb-2" *ngFor="let post of posts">
-        <div class="card-body">
-
-            <div class="row">
-                <div class="col-10">
-                    {{post.postedOn | date:'medium'}}
-                </div>
-                <div class="col-2" style="text-align: right;">
-                    <a (click)="editPost(post)">Edit</a>&nbsp;
-                    <a (click)="deletePost(post.id)">Delete</a>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12">
-                    {{post.content}}
-                </div>
-            </div>
-
-            <div class="row" *ngIf="post.imageBase64 && post.imageBase64 !== null">
-                <div class="preview col-12">
-                    <img [src]="post.imageBase64" [alt]="" >
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-6">
-                    <a (click)="likePost(post)">Likes</a>: {{post.likeCount}}
-                </div>
-                <div class="col-6" style="text-align: right;">
-                    Comments: {{post.commentCount}}
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <app-post *ngFor="let post of posts" [post]="post"></app-post>
 </div>
 
-<div *ngIf="currentStage=='add'">
-    <app-add-post (onClose)="resetListView()" (onSave)="refreshList()"></app-add-post>
-</div>
-
-<div *ngIf="currentStage=='edit'">
-    <app-edit-post [post]="postToEdit"  (onClose)="resetListView()" (onSave)="refreshList()"></app-edit-post>
-</div>

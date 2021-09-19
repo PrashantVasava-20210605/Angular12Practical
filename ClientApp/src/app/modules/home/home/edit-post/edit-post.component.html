@@ -1,28 +1,43 @@
-<div class="card">
-        <div class="card-body">
-            <form [formGroup]="postForm" (ngSubmit)="save()">
-
-                <div class="form-group">
-                <label class="col-md-4">Add Post</label>
+<div class="edit-post-form">
+        <form [formGroup]="postForm" (ngSubmit)="save()">
+    
+            
+            <div class="form-group">
+                <label class="col-md-4" for="content">Post</label>
+                <textarea id="content" formControlName="content" maxlength="500" class="col-12" rows="5">
+    
+                </textarea>
+                <div *ngIf="(submitted || contentControl.dirty || contentControl.touched)  &&  contentControl.errors?.required" class="alert-danger">
+                    Post must not be blank.
                 </div>
-
-                <div class="form-group">
-                    <textarea formControlName="content" maxlength="500" class="col-12" rows="5">
-
-                    </textarea>
-                    <div *ngIf="(contentControl.dirty || contentControl.touched)  &&  contentControl.errors?.required" class="alert-danger">
-                        Post must not be blank.
+            </div>
+    
+            
+            <!-- File Input -->
+            <div class="form-group">
+                <div class="card" *ngIf="postImage && postImage !== ''" >
+                    <div class="card-body">
+                        <div class="preview">
+                            <img [src]="postImage" [alt]="" >
+                        </div>    
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">
-                        Save
-                    </button>
-                    <button type="button" (click)="closeForm()" class="btn btn-danger">
-                        Cancel
-                    </button>
-                </div>
-            </form>
-        </div>
-</div>
+                <span *ngIf="!postImage || postImage === ''">
+                    <a (click)="openFileUpload()">Upload Image</a>
+                </span>
+                <span *ngIf="postImage && postImage !== ''">
+                    <a (click)="openFileUpload()">Change Image</a>&nbsp;
+                    <a (click)="removeFile()">Remove</a>
+                </span>
+                <input type="file" id="uploadImage" formControlName = "uploadImage" (change)="setFile($event)" style="display: none;">
+            </div>
+    
+    
+            <div class="form-group" style="text-align: right; align-items: right;">
+                <button type="submit" class="btn btn-primary">
+                    Save
+                </button>
+            </div>
+        </form>
+    </div>
+    

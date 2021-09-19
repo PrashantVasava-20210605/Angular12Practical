@@ -1,0 +1,24 @@
+<ng-template #modalform let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title" [ngSwitch]="popupParam.popupType">
+            <span *ngSwitchCase="popupType.addPost">Add Post</span>
+            <span *ngSwitchCase="popupType.editPost">Edit Post</span>
+            <span *ngSwitchCase="popupType.addComment">Add Comment</span>
+            <span *ngSwitchCase="popupType.editComment">Edit Comment</span>
+        </h4>
+        <button type="button" class="close" aria-label="Close" (click)="closePopup()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+      <ng-container [ngSwitch]="popupParam.popupType">
+            <div *ngSwitchCase="popupType.addPost">
+                <app-add-post (onClose)="closePopup()"></app-add-post>
+            </div>
+            <div *ngSwitchCase="popupType.editPost">
+                <app-edit-post [postId]="popupParam.data.postId" (onClose)="closePopup()"></app-edit-post>
+            </div>
+      </ng-container>
+    </div>
+</ng-template>
+

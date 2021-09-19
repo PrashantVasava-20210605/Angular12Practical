@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { Post } from '../models/post';
 
 @Injectable({
@@ -9,6 +9,10 @@ import { Post } from '../models/post';
 export class LinkedinService {
 
   private uri: string = 'http://localhost:59927/api/LinkedIn';
+  private imageLocation: string = 'http://localhost:59927/Images';
+
+  private postAddEditSubject = new BehaviorSubject<number>(null);
+  public onPostAddEdit = this.postAddEditSubject.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -16,12 +20,26 @@ export class LinkedinService {
     return this.http.get<Post[]>(`${this.uri}/posts`);
   }
 
-  addPost(postModel: Post) : Observable<number> {
-    return this.http.post<number>(`${this.uri}/posts`, postModel);
+  getPostById(postId: number): Observable<Post> {
+    return this.http.get<Post>(`${this.uri}/posts/${postId}`);
   }
 
-  updatePost(postId: number, postModel: Post) : Observable<void> {
-    return this.http.put<void>(`${this.uri}/posts/${postId}`, postModel);
+  addPost(postModel: Post, file:File) : Observable<number> {
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('postJson', JSON.stringify(postModel));
+
+    return this.http.post<number>(`${this.uri}/posts`, formData);
+  }
+
+  updatePost(postId: number, postModel: Post, file:File) : Observable<void> {
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('postJson', JSON.stringify(postModel));
+
+    return this.http.put<void>(`${this.uri}/posts/${postId}`, formData);
   }
 
   deletePost(postId: number) : Observable<void> {
@@ -44,4 +62,11 @@ export class LinkedinService {
     return this.http.delete<void>(`${this.uri}/posts/${postId}/comments/${commentId}`);
   }
 
+  getImageLocation(fileName: string) {
+    return `${this.imageLocation}/${fileName}`;
+  }
+
+  notifyPostAddEdit(postId: number) {
+    this.postAddEditSubject.next(postId);
+  }
 }
