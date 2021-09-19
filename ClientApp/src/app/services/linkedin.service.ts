@@ -58,11 +58,15 @@ export class LinkedinService {
     return this.http.get<Comment[]>(`${this.uri}/posts/${postId}/comments`);
   }
 
+  getCommentById(postId: number, commentId: number): Observable<Comment> {
+    return this.http.get<Comment>(`${this.uri}/posts/${postId}/comments/${commentId}`);
+  }
+
   addComment(postId, commentModel: Comment) : Observable<number> {
     return this.http.post<number>(`${this.uri}/posts/${postId}/comments`, commentModel);
   }
 
-  updateComment(postId: number, commentId: number, commentModel: Post) : Observable<void> {
+  updateComment(postId: number, commentId: number, commentModel: Comment) : Observable<void> {
     return this.http.put<void>(`${this.uri}/posts/${postId}/comments/${commentId}`, commentModel);
   }
 

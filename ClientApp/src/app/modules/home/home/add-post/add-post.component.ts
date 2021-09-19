@@ -20,9 +20,7 @@ export class AddPostComponent implements OnInit, OnDestroy {
   postImage: string;
   attachment: File = null;
   
-  public get contentControl(): AbstractControl {
-    return this.postForm.get('content');
-  }
+ 
   
   
   constructor(private fb: FormBuilder, private linkedinService: LinkedinService) { 
@@ -30,6 +28,10 @@ export class AddPostComponent implements OnInit, OnDestroy {
       content: ['', [Validators.required]],
       uploadImage: [null]
     });
+  }
+
+  public get contentControl(): AbstractControl {
+    return this.postForm.get('content');
   }
 
   ngOnInit() {

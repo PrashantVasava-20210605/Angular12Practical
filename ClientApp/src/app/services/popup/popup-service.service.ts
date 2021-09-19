@@ -29,4 +29,23 @@ export class PopupServiceService {
     this.openPopupSubject.next(popupParam);
   }
 
+  openAddCommentForm(postId: number) {
+    const popupParam = new PopupParam();
+    popupParam.popupType = PopupType.addComment;
+    popupParam.data = {
+      postId: postId
+    };
+    this.openPopupSubject.next(popupParam);
+  }
+
+  openEditCommentForm(postId: number, commentId: number) {
+    const popupParam = new PopupParam();
+    popupParam.popupType = PopupType.editComment;
+    popupParam.data = {
+      postId: postId,
+      commentId: commentId
+    };
+    this.openPopupSubject.next(popupParam);
+  }
+
 }

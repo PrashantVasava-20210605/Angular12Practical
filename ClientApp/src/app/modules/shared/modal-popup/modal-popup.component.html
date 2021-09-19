@@ -18,6 +18,12 @@
             <div *ngSwitchCase="popupType.editPost">
                 <app-edit-post [postId]="popupParam.data.postId" (onClose)="closePopup()"></app-edit-post>
             </div>
+            <div *ngSwitchCase="popupType.addComment">
+                <app-add-comment [postId]="popupParam.data.postId"  (onClose)="closePopup()"></app-add-comment>
+            </div>
+            <div *ngSwitchCase="popupType.editComment">
+                <app-edit-comment [postId]="popupParam.data.postId" [commentId]="popupParam.data.commentId" (onClose)="closePopup()"></app-edit-comment>
+            </div>
       </ng-container>
     </div>
 </ng-template>

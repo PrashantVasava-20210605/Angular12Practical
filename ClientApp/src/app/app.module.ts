@@ -16,6 +16,8 @@ import { ModalPopupComponent } from './modules/shared/modal-popup/modal-popup.co
 import { PopupServiceService } from './services/popup/popup-service.service';
 import { NgbModule, NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { PostComponent } from './modules/home/home/post/post.component';
+import { AddCommentComponent } from './modules/home/home/add-comment/add-comment.component';
+import { EditCommentComponent } from './modules/home/home/edit-comment/edit-comment.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { PostComponent } from './modules/home/home/post/post.component';
     ProfileComponent,
     EditPostComponent,
     ModalPopupComponent,
-    PostComponent
+    PostComponent,
+    AddCommentComponent,
+    EditCommentComponent
   ],
   imports: [
     BrowserModule,

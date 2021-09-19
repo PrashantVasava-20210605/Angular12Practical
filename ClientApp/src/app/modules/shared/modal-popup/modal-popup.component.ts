@@ -29,7 +29,8 @@ export class ModalPopupComponent implements OnInit {
         return;
       }
       this.popupParam = x;
-      this.modalService.open(this.modal, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {}, (reject) => {});
+      this.modalService.open(this.modal, {ariaLabelledBy: 'modal-basic-title'});
+      //.result.then((result) => {}, (reject) => {});
     });
   }
 

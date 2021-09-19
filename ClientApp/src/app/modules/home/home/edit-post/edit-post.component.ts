@@ -122,7 +122,7 @@ export class EditPostComponent implements OnInit {
     this.getPostByIdSubscription = this.linkedinService.getPostById(this.postId).subscribe(
       (response) => {
         this.post = response;
-        this.postForm.controls['content'].setValue(this.post.content);
+        this.contentControl.setValue(this.post.content);
         if (this.post.imageFileName && this.post.imageFileName!=='') {
           this.postImage = this.linkedinService.getImageLocation(this.post.imageFileName);
         }

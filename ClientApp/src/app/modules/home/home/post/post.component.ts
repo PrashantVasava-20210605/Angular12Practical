@@ -96,11 +96,16 @@ export class PostComponent implements OnInit, OnDestroy {
   listComments() {
     this.linkedinService.listComments(this.post.id).subscribe(response => {
       this.commentList = response;
+      this.post.commentCount = this.commentList.length;
     });
   }
 
-  editComment(commentId: number) {
+  addComment() {
+    this.popupService.openAddCommentForm(this.post.id);
+  }
 
+  editComment(commentId: number) {
+    this.popupService.openEditCommentForm(this.post.id, commentId);
   }
 
   deleteComment(commentId: number) {

@@ -32,6 +32,10 @@
         <div class="collapse" [ngClass]="{'show':showComments}" >
             <div class="card card-body">
 
+                <div class="row">
+                    <a (click)="addComment()">Add Comment</a>
+                </div>
+
                 <div class="row" *ngFor = "let comment of commentList">
                     <div class="col-10">
                         {{comment.postedOn | date:'medium'}}
