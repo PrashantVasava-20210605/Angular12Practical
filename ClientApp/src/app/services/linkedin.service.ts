@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Post } from '../models/post';
+import { Comment } from '../models/comment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,9 @@ export class LinkedinService {
 
   private postAddEditSubject = new BehaviorSubject<number>(null);
   public onPostAddEdit = this.postAddEditSubject.asObservable();
+
+  private commentAddEditSubject = new BehaviorSubject<number>(null);
+  public onCommentAddEdit = this.commentAddEditSubject.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -50,6 +54,10 @@ export class LinkedinService {
     return this.http.post<number>(`${this.uri}/posts/${postId}/like`, null);
   };
 
+  listComments(postId): Observable<Comment[]> {
+    return this.http.get<Comment[]>(`${this.uri}/posts/${postId}/comments`);
+  }
+
   addComment(postId, commentModel: Comment) : Observable<number> {
     return this.http.post<number>(`${this.uri}/posts/${postId}/comments`, commentModel);
   }
@@ -68,5 +76,9 @@ export class LinkedinService {
 
   notifyPostAddEdit(postId: number) {
     this.postAddEditSubject.next(postId);
+  }
+
+  notifyCommentAddEdit(postId: number) {
+    this.commentAddEditSubject.next(postId);
   }
 }

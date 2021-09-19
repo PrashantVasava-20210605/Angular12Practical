@@ -6,8 +6,8 @@
                 {{post.postedOn | date:'medium'}}
             </div>
             <div class="col-2" style="text-align: right;">
-                <a (click)="editPost(post.id)">Edit</a>&nbsp;
-                <a (click)="deletePost(post.id)">Delete</a>
+                <a (click)="editPost()">Edit</a>&nbsp;
+                <a (click)="deletePost()">Delete</a>
             </div>
         </div>
 
@@ -24,11 +24,27 @@
         </div>
 
         <div class="row">
-            <div class="col-6">
-                <a (click)="likePost(post)">Likes</a>: {{post.likeCount}}
-            </div>
-            <div class="col-6" style="text-align: right;">
-                Comments: {{post.commentCount}}
+            <a (click)="likePost(post)">Likes: {{post.likeCount}}</a>
+
+            <a (click)="openComments()" >Comments: {{post.commentCount}}</a>
+        </div>
+
+        <div class="collapse" [ngClass]="{'show':showComments}" >
+            <div class="card card-body">
+
+                <div class="row" *ngFor = "let comment of commentList">
+                    <div class="col-10">
+                        {{comment.postedOn | date:'medium'}}
+                    </div>
+                    <div class="col-2" style="text-align: right;">
+                        <a (click)="editComment(comment.id)">Edit</a>&nbsp;
+                        <a (click)="deleteComment(comment.id)">Delete</a>
+                    </div>
+                    <div class="col-12">
+                        {{comment.content}}
+                    </div>
+                </div>
+        
             </div>
         </div>
     </div>
